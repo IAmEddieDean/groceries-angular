@@ -1,0 +1,23 @@
+h3 Please pick up:
+
+.row
+  .col-xs-6.col-offset-3
+    form(name='groceryList', novalidate)
+      .form-group
+        label(for='title') Item Name
+        input.form-control(type='text', name='title', ng-model='item.title')
+      .form-group
+        label(for='quantity') Quantity
+        input.form-control(type='number', name='quantity', ng-model='item.quantity')
+      .form-group
+        label(for='location') Store Location
+        input.form-control(type='text', name='location', ng-model='item.location')
+      .form-group
+        select.form-control
+          option Need!
+          option Want.
+          option Would be nice.
+      .form-group
+        label(for='quantity') Quantity
+        input.form-control(type='number', name='quantity', ng-model='item.quantity')
+    
