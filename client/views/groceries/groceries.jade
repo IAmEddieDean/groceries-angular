@@ -1,7 +1,6 @@
 h3 Please pick up:
-
 .row
-  .col-xs-8.col-xs-offset-2
+  .col-xs-7.col-xs-offset-1
     form.form-inline(name='groceryList', novalidate)
       .form-group
         label(for='title') Item Name
@@ -18,14 +17,41 @@ h3 Please pick up:
           option Need!
           option Want.
           option Would be nice.
-.row
-  .col-xs-4.col-xs-offset-4
-    button.btn.btn-success.btn-xs(ng-click='cameraOn()'): i.fa.fa-camera.fa-fw
-    button.btn.btn-danger.btn-xs(ng-click='cameraOff()'): i.fa.fa-ban.fa-fw
-    button.btn.btn-warning.btn-xs(ng-click='takePhoto()'): i.fa.fa-bolt.fa-fw
-    button.btn.btn-default.btn-xs(ng-click='save(item)'): i.fa.fa-beer.fa-fw
-.row
   .col-xs-4
+    img#photo(ng-src='{{item.image}}')
+hr
+.row
+  .col-xs-12#photobuttons
+    // add code for camera enable in groceries.js
+    button.btn.btn-success.photobutton(ng-click='cameraOn()' ng-hide='camera'): i.fa.fa-camera &nbsp;&nbsp; Turn on Camera
+    button.btn.btn-warning.photobutton(ng-click='takePhoto()' ng-show='camera'): i.fa.fa-bolt &nbsp;&nbsp; Take Picture
+    button.btn.btn-danger.photobutton(ng-click='cameraOff()' ng-show='camera'): i.fa.fa-ban &nbsp;&nbsp; Turn off Camera
+.row
+  .col-xs-6.col-xs-offset-3
     #camera
-  .col-xs-4
-    img#photo(ng-src='{{item.photo}}')
+hr
+.row
+  .col-xs-12
+    button.btn.btn-default(ng-click='save(item)'): i.fa.fa-beer &nbsp;&nbsp; Save Item
+.row
+.row
+  .col-xs-12
+    table.table.table.striped
+      thead
+        tr
+          th Delete
+          th Edit
+          th Item
+          th Quantity
+          th Store Location
+          th Priority
+          th Photo
+      tbody
+        tr(ng-repeat='thing in items')
+          td: button.tablebutton.btn.btn-danger(ng-click='destroy(thing)'): i.fa.fa-trash.fa-xs
+          td: button.tablebutton.btn.btn-warning(ng-click='edit(thing)'): i.fa.fa-pencil.fa-xs
+          td {{thing.title}}
+          td {{thing.quantity}}
+          td {{thing.location}}
+          td {{thing.priority}}
+          td: img.tablephoto(ng-src='{{thing.photo}}')

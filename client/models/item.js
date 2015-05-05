@@ -9,6 +9,9 @@ angular.module('groceries')
     return $http.post(nodeUrl + '/items', item);
   };
   
+  Item.getRecords = function(){
+    return $http.get(nodeUrl + '/items');
+  };
   
   
   return Item;
