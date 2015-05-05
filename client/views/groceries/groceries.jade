@@ -22,7 +22,6 @@ h3 Please pick up:
 hr
 .row
   .col-xs-12#photobuttons
-    // add code for camera enable in groceries.js
     button.btn.btn-success.photobutton(ng-click='cameraOn()' ng-hide='camera'): i.fa.fa-camera &nbsp;&nbsp; Turn on Camera
     button.btn.btn-warning.photobutton(ng-click='takePhoto()' ng-show='camera'): i.fa.fa-bolt &nbsp;&nbsp; Take Picture
     button.btn.btn-danger.photobutton(ng-click='cameraOff()' ng-show='camera'): i.fa.fa-ban &nbsp;&nbsp; Turn off Camera
@@ -32,11 +31,12 @@ hr
 hr
 .row
   .col-xs-12
-    button.btn.btn-default(ng-click='save(item)'): i.fa.fa-beer &nbsp;&nbsp; Save Item
+    button.btn.btn-default(ng-click='create(item)' ng-hide='editMode'): i.fa.fa-beer &nbsp;&nbsp; Add Item
+    button.btn.btn-default(ng-click='update(item)' ng-show='editMode'): i.fa.fa-beer &nbsp;&nbsp; Update Item
 .row
 .row
   .col-xs-12
-    table.table.table.striped
+    table.table.table-striped
       thead
         tr
           th Delete
@@ -47,11 +47,12 @@ hr
           th Priority
           th Photo
       tbody
-        tr(ng-repeat='thing in items')
+        tr(ng-repeat='thing in items', ng-class='{strike: thing.isHave}')
           td: button.tablebutton.btn.btn-danger(ng-click='destroy(thing)'): i.fa.fa-trash.fa-xs
           td: button.tablebutton.btn.btn-warning(ng-click='edit(thing)'): i.fa.fa-pencil.fa-xs
+          td: input(type='checkbox', ng-model='thing.isHave', ng-click='toggleIsHave(thing)')
           td {{thing.title}}
           td {{thing.quantity}}
           td {{thing.location}}
           td {{thing.priority}}
-          td: img.tablephoto(ng-src='{{thing.photo}}')
+          td: img.tablephoto(ng-src='{{thing.image}}')

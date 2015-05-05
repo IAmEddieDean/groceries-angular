@@ -5,12 +5,13 @@ angular.module('groceries')
   
   $scope.item = {};
   $scope.camera = false;
-  
+  $scope.editMode = false;
   getRecords();
   
   function getRecords(){
     Item.getRecords()
     .then(function(response){
+      
       $scope.items = response.data.items;
     });
   }
@@ -29,11 +30,14 @@ angular.module('groceries')
       $scope.item.image = dataUrl;
     });
   };
-  $scope.save = function(item){
-    Item.save(item)
+  $scope.create = function(item){
+    Item.create(item)
     .then(function(returnedRecord){
       $scope.item = {};
       $scope.items.push(returnedRecord.data);
+    })
+    .catch(function(){
+      $window.swal({title: 'Profile Error', text: 'There was a problem saving your profile. Please try again.', type: 'error'});
     });
   };
   $scope.destroy = function(item){
@@ -46,13 +50,27 @@ angular.module('groceries')
     });
   };
   $scope.update = function(item){
-    // Item.update(item)
-    // .then(function(returnedRecord){
-    //   //
-    // })
+    var itemKey = item._id;
+    var newItem = angular.copy(item);
+    delete newItem._id;
+    delete newItem.userId;
+    delete newItem.__v;
+    delete newItem.createdAt;
+    Item.update(newItem, itemKey)
+    .then(function(returnedRecord){
+      item = returnedRecord;
+    });
+    $scope.item = {};
+    $scope.editMode = false;
   };
   $scope.edit = function(item){
     $scope.item = item;
+    $scope.editMode = true;
+    
+  };
+  $scope.toggleIsHave = function(item){
+    item.isHave = item.isHave ? true : false;
+    $scope.update(item);
     
   };
   
