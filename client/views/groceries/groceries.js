@@ -7,6 +7,7 @@ angular.module('groceries')
   $scope.camera = false;
   $scope.editMode = false;
   getRecords();
+  $window.Webcam.set({width: 200, height: 150});
   
   function getRecords(){
     Item.getRecords()
